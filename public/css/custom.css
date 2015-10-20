@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+#search {
+    margin: auto;
+    width: 66vw;
+}
+
+#search input {
+    padding-top: 20px;
+    display: block;
+}
+
+#search li {
+    min-height: 104px;
+    padding-left: 114px;
+}
+
+#search li img {
+    width: 84px;
+    height: 84px;
+}

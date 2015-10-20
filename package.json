@@ -1,0 +1,40 @@
+{
+  "name": "sushi-search",
+  "version": "1.0.0",
+  "description": "A sushi-filtering system to find out your favorite kind of sushi!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tacastillo/SushiSearch.git"
+  },
+  "keywords": [
+    "React.js",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "sushi"
+  ],
+  "author": "Timothy Castillo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tacastillo/SushiSearch/issues"
+  },
+  "homepage": "https://github.com/tacastillo/SushiSearch#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "express-validator": "^2.17.1",
+    "mongodb": "^2.0.46",
+    "react": "^0.14.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-develop-server": "^0.4.3",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-react": "^3.1.0",
+    "gulp-watch": "^4.3.5"
+  }
+}
