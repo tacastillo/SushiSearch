@@ -34,7 +34,7 @@ mongodb.MongoClient.connect(url, function(err, db) {
     app.get('/menu', function(req, res, next) {
         req.menu.find({}, {sort: {name: -1}}).toArray(function (err, docs) {
             if (err) return next(err)
-            return res.json(docs)
+                return res.json(docs)
         })
     })
 
@@ -44,7 +44,7 @@ mongodb.MongoClient.connect(url, function(err, db) {
         var errors = req.validationErrors()
         if (errors) return next(errors)
         req.body.name = req.body.name.capitalize()
-        req.body.ingredients = req.body.ingredients.capitalize()
+        req.body.ingredients = req.body.ingredients.map(function(word) {return word.capitalize()})
         req.menu.insertOne(req.body, function(err, result) {
             if (err) return next(err)
             return res.json(result.ops[0])

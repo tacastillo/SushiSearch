@@ -1,15 +1,11 @@
-* {
-    box-sizing: border-box;
-}
-
 #search {
-    margin: auto;
-    width: 66vw;
+    box-sizing: border-box;
 }
 
 #search input {
     padding-top: 20px;
-    display: block;
+    max-width: 24rem;
+    text-align: center;
 }
 
 #search li {
@@ -20,4 +16,38 @@
 #search li img {
     width: 84px;
     height: 84px;
+}
+
+#input-wrapper {
+    text-align: center;
+}
+
+.collection {
+    display: inline-flex;
+    flex-flow: row wrap;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.collection-item {
+    flex: auto;
+    min-width: 24rem;
+    max-width: 24rem;
+    border-right: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+}
+
+.collection-item:last-child{
+    border-bottom: 1px solid #e0e0e0!important;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
 }
