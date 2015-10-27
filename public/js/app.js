@@ -1,17 +1,19 @@
 var Header = React.createClass({displayName: "Header",
     render: function() {
         return (
-            React.createElement("nav", {className: "orange lighten-2"}, 
+            React.createElement("div", null, 
+                React.createElement("nav", {className: "orange lighten-2"}, 
                 React.createElement("div", {className: "wrapper"}, 
                     React.createElement("a", {href: "#", className: "brand-logo center"}, "Sushi Search")
                 )
-            ))
+            )
+                ))
     }
 })
 
 var Footer = React.createClass({displayName: "Footer",
     render: function () {
-        return (React.createElement("footer", {className: "page-footer orange lighten-2"}, 
+        return (React.createElement("footer", {className: "page-footer orange lighten-3"}, 
             React.createElement("div", {className: "footer-copyright"}, 
                 React.createElement("div", {className: "container"}
 
@@ -23,19 +25,34 @@ var Footer = React.createClass({displayName: "Footer",
 
 var List = React.createClass({displayName: "List",
     render: function() {
-        return (
-            React.createElement("ul", {className: "collection"}, 
-                this.props.results.map(function(item) {
-                    return (React.createElement("li", {className: "collection-item avatar valign-wrapper", key: item.name}, 
-
-                        React.createElement("img", {src: item.image, alt: "", className: "circle"}), 
-                        React.createElement("div", {className: "valign"}, 
-                            React.createElement("strong", {className: "title"}, item.name), 
-                            React.createElement("p", null, item.ingredients.join(", "))
+        if (this.props.results.length > 0) {
+            return (
+                React.createElement("ul", {className: "collection"}, 
+                    this.props.results.map(function (item) {
+                        return (React.createElement("li", {className: "collection-item avatar valign-wrapper", key: item.name}, 
+                            React.createElement("img", {src: item.image, alt: "", className: "circle"}), 
+                            React.createElement("div", {className: "valign"}, 
+                                React.createElement("strong", {className: "title"}, item.name), 
+                                React.createElement("p", null, item.ingredients.join(", "))
+                            )
+                        ))
+                    })
+                ))
+        } else {
+            return (
+                React.createElement("div", {id: "no-results", className: "valign-wrapper"}, 
+                    React.createElement("div", {className: "row valign"}, 
+                        React.createElement("div", {className: "col offset-m1 m10"}, 
+                            React.createElement("div", {className: "card orange lighten-2"}, 
+                                React.createElement("div", {className: "card-content white-text"}, 
+                                    React.createElement("h1", {className: "center-align"}, "No Results Found")
+                                )
+                            )
                         )
-                    ))
-                })
-            ))
+                    )
+                )
+            )
+        }
     }
 })
 
@@ -52,58 +69,25 @@ var Search = React.createClass({displayName: "Search",
         this.setState({results: results})
     },
     getInitialState: function () {
-        if (this.props.results)
-            return { results: this.props.results, menu: this.props.results }
         return {
             menu: [],
             results: []
         }
-        //return {
-        //    menu: [
-        //        {
-        //            name: "California Roll",
-        //            ingredients: [
-        //                "Crab", "Nori", "Sesame Seeds"
-        //            ],
-        //            image: "http://img1.rnkr-static.com/user_node_img/33/658358/C350/california-roll-foods-photo-u2.jpg"
-        //        },
-        //        {
-        //            name: "Dragon Roll",
-        //            ingredients: [
-        //                "Eel", "Cucumber", "Avocado", "Crab", "Some", "other", "stuff", "and", "other", "ingredients"
-        //            ],
-        //            image: "http://img3.rnkr-static.com/user_node_img/50028/1000558855/C350/dragon-roll-foods-photo-u2.jpg"
-        //        },
-        //        {
-        //            "_id": "5625f2b5bd5630bf25609c54",
-        //            "name": "Tiger Roll",
-        //            "ingredients": [
-        //                "Roe",
-        //                "Cucumber",
-        //                "Avocado",
-        //                "Mayonaisse",
-        //                "Shrimp Tempura"
-        //            ],
-        //            "image": "http://img3.rnkr-static.com/user_node_img/50028/1000558846/C350/tiger-roll-foods-photo-u2.jpg"
-        //        }
-        //    ],
-        //    results: []
-        //}
     },
-    componentWillMount: function () {
+    componentDidMount: function () {
         var url = "http://localhost:5000/menu"
-        var _this = this
-        $.getJSON(url, function (result) {
-            if(!result || !result.length)
-                return []
-            _this.setState({menu: result, result: result})
-        })/*.bind(this)*/
-        //this.setState({results: this.state.menu})
-
+        $.get(url, function(result) {
+            if (this.isMounted()) {
+                this.setState({
+                    menu: result,
+                    results: result
+                })
+            }
+        }.bind(this))
     },
     render: function () {
         return (
-            React.createElement("div", {className: "results container"}, 
+            React.createElement("div", {className: "results"}, 
                 React.createElement("div", {id: "input-wrapper"}, 
                     React.createElement("input", {type: "text", placeholder: "ex. crab, nori, eel...", onChange: this.searchMenu})
                 ), 

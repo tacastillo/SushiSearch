@@ -28,6 +28,7 @@
     border-top: none;
     border-right: none;
     border-bottom: none;
+    margin-left: 22vw;
 }
 
 .collection-item {
@@ -40,6 +41,7 @@
 
 .collection-item:last-child{
     border-bottom: 1px solid #e0e0e0!important;
+    /*WARNING: Uses !important. I'm sorry in advance*/
 }
 
 body {
@@ -48,6 +50,14 @@ body {
     flex-direction: column;
 }
 
+h1 {
+    margin: auto;
+}
+
 main {
     flex: 1 0 auto;
+}
+
+#no-results {
+    height: 60vh;
 }
