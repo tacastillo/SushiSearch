@@ -44,6 +44,10 @@
     font-size: large;
 }
 
+#collection-wrapper {
+    margin-left: 15vw;
+}
+
 .collection {
     display: inline-flex;
     flex-flow: row wrap;
@@ -62,7 +66,7 @@
 }
 
 .collection-item:last-child{
-    border-bottom: 1px solid #e0e0e0!important;
+    border-bottom: 1px solid #e0e0e0 !important;
     /*WARNING: Uses !important. I'm sorry in advance*/
 }
 

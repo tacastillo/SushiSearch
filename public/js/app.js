@@ -4,7 +4,7 @@ var Header = React.createClass({displayName: "Header",
             React.createElement("div", null, 
                 React.createElement("nav", {className: "orange lighten-2"}, 
                 React.createElement("div", {className: "wrapper"}, 
-                    React.createElement("a", {href: "#", className: "brand-logo center"}, "Sushi Search")
+                    React.createElement("a", {href: "#", className: "brand-logo center"}, "This Thing Needs a Better Name")
                 )
             )
                 ))
@@ -37,13 +37,41 @@ var AddButton = React.createClass({displayName: "AddButton",
     }
 })
 
-//var IngredientInputs = React.create({
-//
-//})
+var Chips = React.createClass({displayName: "Chips",
+
+    render: function () {
+        return (
+            React.createElement("div", {id: "chips-container"}, 
+                React.createElement("div", {className: "chip"}, 
+                    this.props.chips.length
+                ), 
+                this.props.chips.map(function (chip) {
+                    return (
+                        React.createElement("div", {className: "chip teal lighten-2 white-text", key: chip}, 
+                            chip, 
+                            React.createElement("i", {className: "material-icons"}, "close")
+                        ))
+                })
+            ))
+    }
+})
 
 var InsertModal = React.createClass({displayName: "InsertModal",
+    getInitialState: function () {
+        return {
+            chips: []
+        }
+    },
     click: function () {
-
+        var input = $('#ingredient-text')
+        if (input.val() == "")
+            return
+        var newChips = this.state.chips
+        newChips.push(input.val())
+        console.log(input.val())
+        input.val("")
+        this.setState({chips: newChips})
+        console.log("Chips: " + this.state.chips.join(", "))
     },
     render: function() {
         return (
@@ -60,20 +88,21 @@ var InsertModal = React.createClass({displayName: "InsertModal",
                         ), 
                         React.createElement("div", {className: "row"}, 
                             React.createElement("div", {className: "input-field col s4", id: "ingredient-input"}, 
-                                React.createElement("input", {placeholder: "Ingredient", type: "text", className: "validate"}), 
+                                React.createElement("input", {type: "text", className: "validate", id: "ingredient-text"}), 
                                 React.createElement("label", {htmlFor: "ingredient-input"}, "Ingredient")
                             ), 
                             React.createElement("div", {className: "input-field col cs2", id: "insert-ingredient-button"}, 
-                                React.createElement("a", {onClick: this.click, className: "btn-floating btn-small waves-effect waves-light blue"}, 
+                                React.createElement("a", {onClick: this.click, className: "btn-floating btn-small waves-effect waves-light teal lighten-2"}, 
                                     "+"
                                 )
                             )
                         )
-                    )
+                    ), 
+                    React.createElement(Chips, {chips: this.state.chips})
                 )
             ), 
             React.createElement("div", {className: "modal-footer"}, 
-                React.createElement("a", {href: "#!", className: " modal-action modal-close waves-effect waves-orange btn-flat"}, "Agree")
+                React.createElement("a", {href: "#!", className: " modal-action modal-close waves-effect waves-orange btn-flat"}, "Insert")
             )
         ))
     }
@@ -83,7 +112,7 @@ var List = React.createClass({displayName: "List",
     render: function() {
         if (this.props.results.length > 0) {
             return (
-                React.createElement("div", null, 
+                React.createElement("div", {id: "collection-wrapper"}, 
                     React.createElement("ul", {className: "collection "}, 
                         this.props.results.map(function (item) {
                             return (React.createElement("li", {className: "collection-item avatar valign-wrapper", key: item.name}, 
@@ -117,12 +146,12 @@ var List = React.createClass({displayName: "List",
 var Search = React.createClass({displayName: "Search",
     searchMenu: function (event) {
         var results = this.state.menu
-        //TODO Drop the runtime from O(N^2) to O(N), maybe using reduce()?
+        var input = event.target.value.toLowerCase()
         results = results.filter(function(item){
             return item.ingredients.filter(function(ingredient) {
-                return ingredient.toLowerCase().indexOf(
-                    event.target.value.toLowerCase()) === 0
-            }).length > 0
+                return ingredient.toLowerCase().indexOf(input) === 0
+            }).length > 0 ||
+                item.name.toLowerCase().toLowerCase().indexOf(input) === 0
         })
         this.setState({results: results})
     },

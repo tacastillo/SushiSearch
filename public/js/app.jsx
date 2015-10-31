@@ -4,7 +4,7 @@ var Header = React.createClass({
             <div>
                 <nav className="orange lighten-2">
                 <div className="wrapper">
-                    <a href="#" className="brand-logo center">Sushi Search</a>
+                    <a href="#" className="brand-logo center">This Thing Needs a Better Name</a>
                 </div>
             </nav>
                 </div>)
@@ -37,13 +37,41 @@ var AddButton = React.createClass({
     }
 })
 
-//var IngredientInputs = React.create({
-//
-//})
+var Chips = React.createClass({
+
+    render: function () {
+        return (
+            <div id="chips-container">
+                <div className="chip">
+                    {this.props.chips.length}
+                </div>
+                {this.props.chips.map(function (chip) {
+                    return (
+                        <div className="chip teal lighten-2 white-text" key={chip}>
+                            {chip}
+                            <i className="material-icons">close</i>
+                        </div>)
+                })}
+            </div>)
+    }
+})
 
 var InsertModal = React.createClass({
+    getInitialState: function () {
+        return {
+            chips: []
+        }
+    },
     click: function () {
-
+        var input = $('#ingredient-text')
+        if (input.val() == "")
+            return
+        var newChips = this.state.chips
+        newChips.push(input.val())
+        console.log(input.val())
+        input.val("")
+        this.setState({chips: newChips})
+        console.log("Chips: " + this.state.chips.join(", "))
     },
     render: function() {
         return (
@@ -60,20 +88,21 @@ var InsertModal = React.createClass({
                         </div>
                         <div className="row">
                             <div className="input-field col s4" id="ingredient-input">
-                                <input placeholder="Ingredient" type="text" className="validate"/>
+                                <input type="text" className="validate" id="ingredient-text"/>
                                 <label htmlFor="ingredient-input">Ingredient</label>
                             </div>
                             <div className="input-field col cs2" id="insert-ingredient-button">
-                                <a onClick={this.click}className="btn-floating btn-small waves-effect waves-light blue">
+                                <a onClick={this.click} className="btn-floating btn-small waves-effect waves-light teal lighten-2">
                                     +
                                 </a>
                             </div>
                         </div>
                     </form>
+                    <Chips chips={this.state.chips} />
                 </div>
             </div>
             <div className="modal-footer">
-                <a href="#!" className=" modal-action modal-close waves-effect waves-orange btn-flat">Agree</a>
+                <a href="#!" className=" modal-action modal-close waves-effect waves-orange btn-flat">Insert</a>
             </div>
         </div>)
     }
@@ -83,7 +112,7 @@ var List = React.createClass({
     render: function() {
         if (this.props.results.length > 0) {
             return (
-                <div>
+                <div id="collection-wrapper">
                     <ul className="collection ">
                         {this.props.results.map(function (item) {
                             return (<li className="collection-item avatar valign-wrapper" key={item.name}>
@@ -117,12 +146,12 @@ var List = React.createClass({
 var Search = React.createClass({
     searchMenu: function (event) {
         var results = this.state.menu
-        //TODO Drop the runtime from O(N^2) to O(N), maybe using reduce()?
+        var input = event.target.value.toLowerCase()
         results = results.filter(function(item){
             return item.ingredients.filter(function(ingredient) {
-                return ingredient.toLowerCase().indexOf(
-                    event.target.value.toLowerCase()) === 0
-            }).length > 0
+                return ingredient.toLowerCase().indexOf(input) === 0
+            }).length > 0 ||
+                item.name.toLowerCase().toLowerCase().indexOf(input) === 0
         })
         this.setState({results: results})
     },
