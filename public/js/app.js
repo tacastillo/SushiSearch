@@ -37,44 +37,18 @@ var AddButton = React.createClass({displayName: "AddButton",
     }
 })
 
-var Chips = React.createClass({displayName: "Chips",
-
-    render: function () {
-        return (
-            React.createElement("div", {id: "chips-container"}, 
-                React.createElement("div", {className: "chip"}, 
-                    this.props.chips.length
-                ), 
-                this.props.chips.map(function (chip) {
-                    return (
-                        React.createElement("div", {className: "chip teal lighten-2 white-text", key: chip}, 
-                            chip, 
-                            React.createElement("i", {className: "material-icons"}, "close")
-                        ))
-                })
-            ))
-    }
-})
-
 var InsertModal = React.createClass({displayName: "InsertModal",
     getInitialState: function () {
         return {
             chips: []
         }
     },
-    click: function () {
-        var input = $('#ingredient-text')
-        if (input.val() == "")
-            return
-        var newChips = this.state.chips
-        newChips.push(input.val())
-        console.log(input.val())
-        input.val("")
-        this.setState({chips: newChips})
-        console.log("Chips: " + this.state.chips.join(", "))
+    insert: function() {
+        console.log($("#material-tags").materialtags('items'))
+        $("#material-tags").empty()
     },
     render: function() {
-        return (
+        return ( /* jshint ignore:start */
         React.createElement("div", {id: "modal1", className: "modal"}, 
             React.createElement("div", {className: "modal-content"}, 
                 React.createElement("h4", null, "Add a New Roll"), 
@@ -87,24 +61,18 @@ var InsertModal = React.createClass({displayName: "InsertModal",
                             )
                         ), 
                         React.createElement("div", {className: "row"}, 
-                            React.createElement("div", {className: "input-field col s4", id: "ingredient-input"}, 
-                                React.createElement("input", {type: "text", className: "validate", id: "ingredient-text"}), 
-                                React.createElement("label", {htmlFor: "ingredient-input"}, "Ingredient")
-                            ), 
-                            React.createElement("div", {className: "input-field col cs2", id: "insert-ingredient-button"}, 
-                                React.createElement("a", {onClick: this.click, className: "btn-floating btn-small waves-effect waves-light teal lighten-2"}, 
-                                    "+"
-                                )
+                            React.createElement("div", {className: "col s8 input-field"}, 
+                                React.createElement("input", {id: "material-tags", type: "text", name: "tags", value: "", "data-role": "materialtags"}), 
+                                React.createElement("label", {htmlFor: "tags"}, "Ingredients")
                             )
                         )
-                    ), 
-                    React.createElement(Chips, {chips: this.state.chips})
+                    )
                 )
             ), 
             React.createElement("div", {className: "modal-footer"}, 
-                React.createElement("a", {href: "#!", className: " modal-action modal-close waves-effect waves-orange btn-flat"}, "Insert")
+                React.createElement("a", {href: "#!", onClick: this.insert, className: " modal-action modal-close waves-effect waves-orange btn-flat"}, "Insert")
             )
-        ))
+        ) /* jshint ignore:end */)
     }
 })
 

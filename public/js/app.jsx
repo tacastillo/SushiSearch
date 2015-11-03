@@ -37,44 +37,18 @@ var AddButton = React.createClass({
     }
 })
 
-var Chips = React.createClass({
-
-    render: function () {
-        return (
-            <div id="chips-container">
-                <div className="chip">
-                    {this.props.chips.length}
-                </div>
-                {this.props.chips.map(function (chip) {
-                    return (
-                        <div className="chip teal lighten-2 white-text" key={chip}>
-                            {chip}
-                            <i className="material-icons">close</i>
-                        </div>)
-                })}
-            </div>)
-    }
-})
-
 var InsertModal = React.createClass({
     getInitialState: function () {
         return {
             chips: []
         }
     },
-    click: function () {
-        var input = $('#ingredient-text')
-        if (input.val() == "")
-            return
-        var newChips = this.state.chips
-        newChips.push(input.val())
-        console.log(input.val())
-        input.val("")
-        this.setState({chips: newChips})
-        console.log("Chips: " + this.state.chips.join(", "))
+    insert: function() {
+        console.log($("#material-tags").materialtags('items'))
+        $("#material-tags").empty()
     },
     render: function() {
-        return (
+        return ( /* jshint ignore:start */
         <div id="modal1" className="modal">
             <div className="modal-content">
                 <h4>Add a New Roll</h4>
@@ -87,24 +61,18 @@ var InsertModal = React.createClass({
                             </div>
                         </div>
                         <div className="row">
-                            <div className="input-field col s4" id="ingredient-input">
-                                <input type="text" className="validate" id="ingredient-text"/>
-                                <label htmlFor="ingredient-input">Ingredient</label>
-                            </div>
-                            <div className="input-field col cs2" id="insert-ingredient-button">
-                                <a onClick={this.click} className="btn-floating btn-small waves-effect waves-light teal lighten-2">
-                                    +
-                                </a>
+                            <div className="col s8 input-field">
+                                <input id="material-tags" type="text" name="tags" value="" data-role="materialtags"/>
+                                <label htmlFor="tags">Ingredients</label>
                             </div>
                         </div>
                     </form>
-                    <Chips chips={this.state.chips} />
                 </div>
             </div>
             <div className="modal-footer">
-                <a href="#!" className=" modal-action modal-close waves-effect waves-orange btn-flat">Insert</a>
+                <a href="#!" onClick={this.insert} className=" modal-action modal-close waves-effect waves-orange btn-flat">Insert</a>
             </div>
-        </div>)
+        </div> /* jshint ignore:end */)
     }
 })
 
