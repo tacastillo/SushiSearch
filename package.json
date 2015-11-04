@@ -4,7 +4,7 @@
   "description": "A sushi-filtering system to find out your favorite kind of sushi!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -31,11 +31,15 @@
     "react": "^0.14.0",
     "request": "^2.65.0"
   },
+  "engines": {
+    "node": "0.12.7"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-develop-server": "^0.4.3",
     "gulp-nodemon": "^2.0.4",
     "gulp-react": "^3.1.0",
     "gulp-watch": "^4.3.5"
-  }
+  },
+  "license": "MIT"
 }
