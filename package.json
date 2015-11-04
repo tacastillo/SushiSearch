@@ -22,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/tacastillo/SushiSearch/issues"
   },
-  "homepage": "https://github.com/tacastillo/SushiSearch#readme",
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
